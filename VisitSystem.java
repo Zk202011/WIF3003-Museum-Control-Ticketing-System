@@ -34,7 +34,6 @@ public class VisitSystem {
         totalTickets++;
         return true;
     }
-    
     @Override
     public void run() {
         while (true) {
