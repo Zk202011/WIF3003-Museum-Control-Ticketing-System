@@ -1,5 +1,6 @@
 # WIF3003-Museum-Control-Ticketing-System-
 WIF3003 Group Project
+
 1.0 Project Description
 The project is to develop a program that includes three systems: ticketing system, entrance system and exit system. 
 The following rules have been set:
