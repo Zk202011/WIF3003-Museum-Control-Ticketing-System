@@ -6,6 +6,8 @@ import java.util.Random;
 public class VisitSystem {
     public ArrayList<Entrance> entrances = new ArrayList<>();
 
+    int totalTickets = 0;
+    
     public VisitSystem() {
         entrances.add(new Entrance("SE"));
         entrances.add(new Entrance("NE"));
@@ -28,6 +30,16 @@ public class VisitSystem {
         // visit
         int i = new Random().nextInt(2);
         entrances.get(i).visit(ticket);
+        
+        totalTickets++;
         return true;
+    }
+    
+    @Override
+    public void run() {
+        while (true) {
+            boolean canVisit = visit();
+            if (!canVisit) break;
+        }
     }
 }
