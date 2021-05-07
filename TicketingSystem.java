@@ -11,16 +11,16 @@ public class TicketingSystem {
         int t = new Random().nextInt(4) + 1;
         int t2 = new Random().nextInt(4) + 1;
         // skip if not yet next purchase
-        if (nextPurchaseTime != 0 && nextPurchaseTime != Main.time.get()) {
+        if (nextPurchaseTime != 0 && nextPurchaseTime != Main.time) {
             return 0;
         }
-        // skip if > 900 daily
-        if (totalTickets + t > 900) {
+        // skip if > max daily limit
+        if (totalTickets + t > Main.MAX_DAILY_LIMIT) {
             System.out.println(Main.timeToString() + ": Unable to purchase: Exceed daily limit.");
             return 0;
         }
         // set next purchase
-        nextPurchaseTime = Main.time.get() + t2;
+        nextPurchaseTime = Main.time + t2;
         if (nextPurchaseTime > Main.END_TICKET_TIME) nextPurchaseTime = -1;
         // add tickets
         for (int i = 0; i < t; i++) {
@@ -31,7 +31,7 @@ public class TicketingSystem {
             else if (id.length() == 3) id = "T0" + id;
             else id = "T" + id;
             // add ticket
-            Main.tickets.add(new Ticket(id, Main.time.get()));
+            Main.tickets.add(new Ticket(id, Main.time));
             // print
             System.out.println(Main.timeToString() + ": Sold ticket " + id);
         }
