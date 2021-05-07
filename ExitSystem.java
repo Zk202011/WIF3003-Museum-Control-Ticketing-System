@@ -3,7 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ExitSystem {
+public class ExitSystem implements Runnable {
     public ArrayList<Exit> exits = new ArrayList<>();
 
     public ExitSystem() {
@@ -11,23 +11,27 @@ public class ExitSystem {
         exits.add(new Exit("WE"));
     }
 
-    public boolean exit() {
-        // for each visitor
-        for (int i = 0; i < Main.ticketsEntered.size(); i++) {
-            Ticket currentTicket = Main.ticketsEntered.get(i);
-            // exit if reached exit time or the museum is closing
-            if (Main.time.get() >= currentTicket.exitTime || Main.time.get() == Main.END_TIME) {
-                // remove from tickets entered
-                Main.ticketsEntered.remove(i);
-                // reduce index by 1
-                i--;
-                // add to tickets left
-                Main.ticketsLeft.add(currentTicket);
-                // exit
-                exits.get(new Random().nextInt(2)).exit(currentTicket);
+    public void exit() {
+        while (true) {
+            Ticket currentTicket = Main.ticketsEntered.peek();
+            // skip checking if no more ticket
+            if (currentTicket == null) {
+                break;
             }
+            // skip checking if does not exceed time
+            if (Main.time < currentTicket.exitTime && Main.time != Main.END_TIME) {
+                break;
+            }
+            // exit if reached exit time or the museum is closing
+            // remove from tickets entered
+            Main.ticketsEntered.poll();
+            // exit
+            exits.get(new Random().nextInt(2)).exit(currentTicket);
         }
+    }
 
-        return true;
+    @Override
+    public void run() {
+        exit();
     }
 }

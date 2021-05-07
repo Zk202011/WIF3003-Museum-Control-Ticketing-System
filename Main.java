@@ -10,6 +10,8 @@ public class Main {
     public static volatile int START_TIME = 540;
     public static volatile int END_TICKET_TIME = 1020;
     public static volatile int END_TIME = 1080;
+    public static volatile int MAX_HOURLY_LIMIT = 100;
+    public static volatile int MAX_DAILY_LIMIT = 900;
 
     static volatile int time = START_TICKET_TIME;
     static TicketingSystem ticketingSystem;
@@ -73,17 +75,39 @@ public class Main {
             END_TIME = 1080;
         }
         // validate
-        if(START_TICKET_TIME > START_TIME) {
+        if (START_TICKET_TIME > START_TIME) {
             System.out.println("Start ticket time cannot be later than start time.");
             return false;
         }
-        if(START_TIME > END_TIME) {
+        if (START_TIME > END_TIME) {
             System.out.println("Start time cannot be later than end time.");
             return false;
         }
-        if(END_TICKET_TIME > END_TIME) {
+        if (END_TICKET_TIME > END_TIME) {
             System.out.println("End ticket time cannot be later than end time.");
             return false;
+        }
+        System.out.print("Max daily limit (default 900): ");
+        text = in.nextLine();
+        if (!text.equals("")) {
+            try {
+                MAX_DAILY_LIMIT = Integer.parseInt(text);
+            } catch (Exception ignored) {
+                return false;
+            }
+        } else {
+            MAX_DAILY_LIMIT = 900;
+        }
+        System.out.print("Max hourly limit (default 100): ");
+        text = in.nextLine();
+        if (!text.equals("")) {
+            try {
+                MAX_HOURLY_LIMIT = Integer.parseInt(text);
+            } catch (Exception ignored) {
+                return false;
+            }
+        } else {
+            MAX_HOURLY_LIMIT = 900;
         }
         return true;
     }
@@ -98,7 +122,7 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         boolean valid = input();
-        while(!valid) valid = input();
+        while (!valid) valid = input();
         // new ticketing system
         ticketingSystem = new TicketingSystem();
         visitSystem = new VisitSystem();
@@ -112,10 +136,10 @@ public class Main {
             ticketingSystem.buy();
             visitThread.start();
             exitThread.start();
-            // move time
-            time++;
             // sleep
             Thread.sleep(100);
+            // move time
+            time++;
         }
 
         // report
@@ -124,4 +148,3 @@ public class Main {
         System.out.println("Total tickets exit: " + ticketsLeft.size());
     }
 }
-
