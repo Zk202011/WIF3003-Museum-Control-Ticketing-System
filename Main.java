@@ -22,10 +22,11 @@ public class Main {
     public static boolean input() {
         Scanner in = new Scanner(System.in);
         String text = "";
-        System.out.print("Start ticket time (default 480): ");
+        System.out.print("Start ticket time (default 8:00): ");
         text = in.nextLine();
         if (!text.equals("")) {
             try {
+                text=Integer.parseInt(text)*60+"";
                 START_TICKET_TIME = Integer.parseInt(text);
                 time = START_TICKET_TIME;
             } catch (Exception ignored) {
@@ -35,10 +36,11 @@ public class Main {
             START_TICKET_TIME = 480;
             time = 480;
         }
-        System.out.print("Start time (default 540): ");
+        System.out.print("Start time (default 9:00): ");
         text = in.nextLine();
         if (!text.equals("")) {
             try {
+                text=Integer.parseInt(text)*60+"";
                 START_TIME = Integer.parseInt(text);
             } catch (Exception ignored) {
                 return false;
@@ -46,10 +48,11 @@ public class Main {
         } else {
             START_TIME = 540;
         }
-        System.out.print("End ticket time (default 1020): ");
+        System.out.print("End ticket time (default 17:00): ");
         text = in.nextLine();
         if (!text.equals("")) {
             try {
+                text=Integer.parseInt(text)*60+"";
                 END_TICKET_TIME = Integer.parseInt(text);
             } catch (Exception ignored) {
                 return false;
@@ -57,10 +60,11 @@ public class Main {
         } else {
             END_TICKET_TIME = 1020;
         }
-        System.out.print("End time (default 1080): ");
+        System.out.print("End time (default 18:00): ");
         text = in.nextLine();
         if (!text.equals("")) {
             try {
+                text=Integer.parseInt(text)*60+"";
                 END_TIME = Integer.parseInt(text);
             } catch (Exception ignored) {
                 return false;
