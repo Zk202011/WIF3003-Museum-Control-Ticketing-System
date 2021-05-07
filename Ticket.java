@@ -12,7 +12,7 @@ public class Ticket {
         
      }   
     
-     @Override
+    
     public int compareTo(Ticket o) {
         return exitTime - o.exitTime;
     }
