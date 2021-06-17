@@ -1,6 +1,6 @@
 package main;
 
-public class Ticket {
+public class Ticket implements Comparable<Ticket> {
     public String id;
     public int time;
     public int duration;
@@ -9,10 +9,9 @@ public class Ticket {
     public Ticket(String id, int time) {
         this.id = id;
         this.time = time;
-        
-     }   
-    
-     @Override
+    }
+
+    @Override
     public int compareTo(Ticket o) {
         return exitTime - o.exitTime;
     }

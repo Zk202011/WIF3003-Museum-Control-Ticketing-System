@@ -18,4 +18,15 @@ public class Entrance {
         int i = new Random().nextInt(4);
         turnstiles.get(i).sensorTicket(ticket);
     }
+
+    public void log() {
+        Main.gamePanel.log(String.format("Entrance (%s): %d", id, getTotal()));
+        for (Turnstile turnstile : turnstiles) turnstile.log();
+    }
+
+    public int getTotal() {
+        int tmp = 0;
+        for (Turnstile t : turnstiles) tmp += t.num;
+        return tmp;
+    }
 }
