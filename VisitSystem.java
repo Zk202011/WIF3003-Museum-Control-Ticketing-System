@@ -3,11 +3,10 @@ package main;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class VisitSystem {
+public class VisitSystem implements Runnable {
     public ArrayList<Entrance> entrances = new ArrayList<>();
-
     int totalTickets = 0;
-    
+
     public VisitSystem() {
         entrances.add(new Entrance("SE"));
         entrances.add(new Entrance("NE"));
@@ -15,10 +14,10 @@ public class VisitSystem {
 
     public boolean visit() {
         // check if can allow more visitors
-        if (Main.ticketsEntered.size() >= 100 ||
+        if (Main.ticketsEntered.size() >= Main.MAX_HOURLY_LIMIT ||
                 Main.tickets.size() == 0 ||
-                Main.time.get() < Main.START_TIME ||
-                Main.time.get() > Main.END_TIME) {
+                Main.time < Main.START_TIME ||
+                Main.time > Main.END_TIME) {
             return false;
         }
         // get ticket
@@ -26,19 +25,30 @@ public class VisitSystem {
         if (ticket == null) return false;
         // set ticket duration and exit time
         ticket.duration = new Random().nextInt(101) + 50;
-        ticket.exitTime = Main.time.get() + ticket.duration;
+        ticket.exitTime = Main.time + ticket.duration;
         // visit
         int i = new Random().nextInt(2);
         entrances.get(i).visit(ticket);
-        
         totalTickets++;
         return true;
     }
+
     @Override
     public void run() {
         while (true) {
             boolean canVisit = visit();
             if (!canVisit) break;
         }
+    }
+
+    public void log(){
+        Main.gamePanel.log("Visit system: " + getTotal());
+        for(Entrance entrance: entrances) entrance.log();
+    }
+
+    public int getTotal() {
+        int tmp = 0;
+        for (Entrance t : entrances) tmp += t.getTotal();
+        return tmp;
     }
 }
