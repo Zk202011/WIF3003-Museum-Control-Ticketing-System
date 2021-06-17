@@ -6,18 +6,18 @@ public class TicketingSystem {
     int nextPurchaseTime = 0;
     int totalTickets = 0;
 
-    public int buy() {
+    public void buy() {
         // buy 1-4 tickets
         int t = new Random().nextInt(4) + 1;
         int t2 = new Random().nextInt(4) + 1;
         // skip if not yet next purchase
         if (nextPurchaseTime != 0 && nextPurchaseTime != Main.time) {
-            return 0;
+            return;
         }
         // skip if > max daily limit
         if (totalTickets + t > Main.MAX_DAILY_LIMIT) {
-            System.out.println(Main.timeToString() + ": Unable to purchase: Exceed daily limit.");
-            return 0;
+            Main.gamePanel.log(Main.timeToString() + ": Unable to purchase: Exceed daily limit.");
+            return;
         }
         // set next purchase
         nextPurchaseTime = Main.time + t2;
@@ -33,10 +33,10 @@ public class TicketingSystem {
             // add ticket
             Main.tickets.add(new Ticket(id, Main.time));
             // print
-            System.out.println(Main.timeToString() + ": Sold ticket " + id);
+            Main.gamePanel.log(Main.timeToString() + ": Sold ticket " + id);
         }
         totalTickets += t;
-        return t;
+        return;
     }
 
 }

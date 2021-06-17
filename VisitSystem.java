@@ -40,4 +40,14 @@ public class VisitSystem implements Runnable {
             if (!canVisit) break;
         }
     }
+
+    public void log(){
+        Main.gamePanel.log("Visit system: " + getTotal());
+        for(Entrance entrance: entrances) entrance.log();
+    }
+    public int getTotal() {
+        int tmp = 0;
+        for (Entrance t : entrances) tmp += t.getTotal();
+        return tmp;
+    }
 }
