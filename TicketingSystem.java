@@ -38,5 +38,4 @@ public class TicketingSystem {
         totalTickets += t;
         return;
     }
-
 }
