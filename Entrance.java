@@ -19,3 +19,4 @@ public class Entrance {
         turnstiles.get(i).sensorTicket(ticket);
     }
 }
+实验
