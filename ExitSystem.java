@@ -30,6 +30,17 @@ public class ExitSystem implements Runnable {
         }
     }
 
+    public void log() {
+        Main.gamePanel.log("Exit system: " + getTotal());
+        for (Exit exit : exits) exit.log();
+    }
+
+    public int getTotal() {
+        int tmp = 0;
+        for (Exit t : exits) tmp += t.getTotal();
+        return tmp;
+    }
+
     @Override
     public void run() {
         exit();
